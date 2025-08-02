@@ -6,21 +6,19 @@
 ## 🤔 这是什么？
 它是一个工作流。可快速构建 带docker且支持自定义固件大小的 immortalWrt
 > 1、支持自定义固件大小 默认1GB <br>
-> 2、支持预安装docker（可选）<br>
-> 3、目前支持x86-64 和 rockchip 两个平台（后续会增加）<br>
-> 4、新增支持MT3000/MT2500/MT6000/B2200（docker可选）<br>
-> 5、新增全志平台R1S、香橙派Zero3等机型的工作流<br>
-> 6、新增用户预设置pppoe拨号功能<br>
-> 7、新增树莓派①②③④⑤<br>
-> 8、新增第三方软件包的集成功能 https://github.com/wukongdaily/AutoBuildImmortalWrt/discussions/209
+> 2、支持可选预安装docker（可选）<br>
+> 3、支持按需增加第三方软件<br>
+> 4、点击这里查看👉🏻[全部支持的机型列表](https://github.com/wukongdaily/AutoBuildImmortalWrt/blob/master/SUPPORT.md) 👈🏻
+
 
 
 ## 如何查询imm仓库内有哪些插件
 https://mirrors.sjtug.sjtu.edu.cn/immortalwrt/releases/24.10.2/packages/x86_64/luci/
 ## 如何查询imm仓库外目前可以集成哪些插件
-https://github.com/wukongdaily/store/tree/master/run
+https://github.com/wukongdaily/store
 > 具体方法 https://github.com/wukongdaily/AutoBuildImmortalWrt/discussions/209
-## 第三方插件集成的原理详见以下视频
+## 【视频教程】如何集成第三方插件？
+https://www.youtube.com/watch?v=KN6AJYV1hBI <br>
 https://www.youtube.com/watch?v=7i6BQeitUtE
 
 ## 旁路由的用户必读
@@ -56,6 +54,8 @@ https://www.youtube.com/watch?v=7i6BQeitUtE
 https://wkdaily.cpolar.cn/15
 # 🌟鸣谢
 ### https://github.com/immortalwrt
+### https://github.com/ophub/flippy-openwrt-actions
+### https://github.com/ophub/amlogic-s9xxx-openwrt
 ### https://github.com/sirpdboy
 ### https://github.com/wukongdaily/ib-overlay
 

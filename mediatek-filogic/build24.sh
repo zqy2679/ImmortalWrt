@@ -1,5 +1,28 @@
 #!/bin/bash
+source shell/custom-packages.sh
 # 该文件实际为imagebuilder容器内的build.sh
+
+#echo "✅ 你选择了第三方软件包：$CUSTOM_PACKAGES"
+# 下载 run 文件仓库
+echo "🔄 正在同步第三方软件仓库 Cloning run file repo..."
+git clone --depth=1 https://github.com/wukongdaily/store.git /tmp/store-run-repo
+
+# 拷贝 run/arm64 下所有 run 文件和ipk文件 到 extra-packages 目录
+mkdir -p /home/build/immortalwrt/extra-packages
+cp -r /tmp/store-run-repo/run/arm64/* /home/build/immortalwrt/extra-packages/
+
+echo "✅ Run files copied to extra-packages:"
+ls -lh /home/build/immortalwrt/extra-packages/*.run
+# 解压并拷贝ipk到packages目录
+sh shell/prepare-packages.sh
+ls -lah /home/build/immortalwrt/packages/
+# 添加架构优先级信息
+sed -i '1i\
+arch aarch64_generic 10\n\
+arch aarch64_cortex-a53 15' repositories.conf
+
+
+
 # yml 传入的路由器型号 PROFILE
 echo "Building for profile: $PROFILE"
 echo "Include Docker: $INCLUDE_DOCKER"
@@ -24,8 +47,6 @@ echo "$(date '+%Y-%m-%d %H:%M:%S') - Starting build process..."
 PACKAGES=""
 PACKAGES="$PACKAGES curl"
 PACKAGES="$PACKAGES luci-i18n-firewall-zh-cn"
-# 服务——FileBrowser 用户名admin 密码admin
-PACKAGES="$PACKAGES luci-i18n-filebrowser-go-zh-cn"
 PACKAGES="$PACKAGES luci-theme-argon"
 PACKAGES="$PACKAGES luci-app-argon-config"
 PACKAGES="$PACKAGES luci-i18n-argon-config-zh-cn"
@@ -33,14 +54,18 @@ PACKAGES="$PACKAGES luci-i18n-diskman-zh-cn"
 #24.10.0
 PACKAGES="$PACKAGES luci-i18n-package-manager-zh-cn"
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn"
-PACKAGES="$PACKAGES luci-i18n-passwall-zh-cn"
-PACKAGES="$PACKAGES luci-app-openclash"
-PACKAGES="$PACKAGES luci-i18n-homeproxy-zh-cn"
 PACKAGES="$PACKAGES openssh-sftp-server"
-# 增加几个必备组件 方便用户安装iStore
-PACKAGES="$PACKAGES fdisk"
-PACKAGES="$PACKAGES script-utils"
-PACKAGES="$PACKAGES luci-i18n-samba4-zh-cn"
+# 文件管理器
+PACKAGES="$PACKAGES luci-i18n-filemanager-zh-cn"
+# 静态文件服务器dufs(推荐)
+PACKAGES="$PACKAGES luci-i18n-dufs-zh-cn"
+# 分区扩容 by sirpdboy 
+PACKAGES="$PACKAGES luci-app-partexp"
+PACKAGES="$PACKAGES luci-i18n-partexp-zh-cn"
+
+# 第三方软件包 合并
+# ======== shell/custom-packages.sh =======
+PACKAGES="$PACKAGES $CUSTOM_PACKAGES"
 
 
 # 判断是否需要编译 Docker 插件
